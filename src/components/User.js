@@ -10,7 +10,7 @@ class User extends Component{
 export default User;
 
 
-// FUNCTION VERSION OF THE COMPONENT =========================
+// FUNCTIONAL COMPONENT VERSION =============================
 //
 // const User = (props) => {
 //   return <li className={classes.user}>{props.name}</li>;
