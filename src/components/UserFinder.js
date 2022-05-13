@@ -1,15 +1,17 @@
+// @ts-nocheck
 // import { Fragment, useState, useEffect, Component } from 'react'
 import { Fragment, Component } from 'react'
 import Users from './Users'
 
 import classes from './UserFinder.module.css'
-import UsersContext from '../store/users-context';
+import UsersContext from '../store/users-context'
+import ErrorBoundary from './ErrorBoundary'
 
 class UserFinder extends Component {
-  static contextType = UsersContext; // need to be named "contextType"
+  static contextType = UsersContext // need to be named "contextType"
 
   constructor() {
-    super();
+    super()
     this.state = {
       filteredUsers: [],
       searchTerm: '',
@@ -23,14 +25,15 @@ class UserFinder extends Component {
   // useEffect(() => {...}, [])
   componentDidMount() {
     // Send http request to get the users...
-    this.setState({filteredUsers: this.context?.users})
+    this.setState({ filteredUsers: this.context.users })
   }
 
   // useEffect(() => {...}, [searchTerm])
-  componentDidUpdate(prevProps, prevState) { 
-    if (prevState.searchTerm !== this.state.searchTerm) { // check dependencies
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchTerm !== this.state.searchTerm) {
+      // check dependencies
       this.setState({
-        filteredUsers: this.context?.users.filter(user =>
+        filteredUsers: this.context.users.filter(user =>
           user.name.includes(this.state.searchTerm)
         ),
       })
@@ -43,14 +46,14 @@ class UserFinder extends Component {
         <div className={classes.finder}>
           <input type="search" onChange={this.searchChangeHandler.bind(this)} />
         </div>
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     )
   }
 }
 export default UserFinder
-
-
 
 // FUNCTIONAL COMPONENT VERSION =============================
 //
